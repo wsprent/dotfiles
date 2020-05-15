@@ -1,0 +1,86 @@
+# ~/.gitconfig_local template
+# [user]
+#		name = William Sprent
+#		email = bsprent@gmail.com
+
+# [github]
+#		user = wsprent
+[include]
+	path = ~/.gitconfig_local
+
+[core]
+	excludesfile = ~/.gitignore
+	editor = emacsclient
+	filemode = false
+	trustctime = false
+#	autocrlf = input
+
+[alias]
+	st = status
+	sts = status -sb
+	stl = ls-files -m -o --exclude-standard
+	ci = commit
+	br = branch
+	co = checkout
+	cr = clone --recursive
+	df = diff --word-diff
+	sh = stash
+
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	ll = log --pretty=oneline --graph --abbrev-commit
+	lm = log --pretty=format:'* %s (%h)'
+	lg = log -p
+  l1 = log -1
+	g = grep --break --heading --line-number
+	amend = commit --amend --reuse-message=HEAD
+	contrib = shortlog --summary --numbered
+	show-ignored = "! git clean -ndX | perl -pe 's/Would remove/Ignored:/'"
+	ld = "!sh -c \"git log --since '${1:-1} days ago' --oneline --author $(git config user.email)\" -"
+	pr = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+  yolo = "! git amend -a && git push -f origin \"$(git rev-parse --abbrev-ref HEAD)\""
+  diff-tracked = "!git diff origin/\"$(git rev-parse --abbrev-ref HEAD)\" \"$(git rev-parse --abbrev-ref HEAD)\""
+
+[pager]
+	diff = diff-so-fancy | less --tabs=4 -RFX
+	show = diff-so-fancy | less --tabs=4 -RFX
+
+[color]
+	ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[color "diff-highlight"]
+	oldNormal = "red bold"
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+
+[grep]
+	lineNumber = true
+
+[help]
+	autocorrect = 1
+
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+
+# [url "ssh://git@"]
+# 	insteadOf = https://
+
+[github "github.cds.internal.unity3d.com"]
+	user = williams
+[merge]
+	conflictstyle = diff3

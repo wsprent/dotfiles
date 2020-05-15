@@ -1,0 +1,19 @@
+#! /bin/bash -e
+
+
+args=
+while getopts "d" opt; do
+  case $opt in
+    d) args=-d
+  esac
+done
+
+json=$(cat -)
+
+for key in $(echo $json | jq -r '.data|keys[]')
+do
+  val=$(echo -n $(echo $json|jq -r --arg key $key '.data[$key]')|base64 $args)
+  json=$(echo $json|jq --arg key "$key" --arg val "$val" '.data[$key]=$val')
+done
+
+echo $json|jq .
