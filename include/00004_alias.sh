@@ -1,12 +1,15 @@
 # Shortcuts
 
 alias _="sudo"
-alias k="kubectl"
 alias g="git"
 alias v="vim"
 alias rr="rm -rf"
 
 alias em="emacsclient"
+
+# Kubectl
+alias k="kubectl"
+alias kctx="kubectl config use-context"
 
 # Global aliases
 
